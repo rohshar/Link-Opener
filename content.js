@@ -1,34 +1,17 @@
 var count = 0;
 
-/*chrome.runtime.onMessage.addListener(
+chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse) {
-		if (count < 5) {//request.message === "clicked_browser_action") {
+		if (request.message === "clicked_browser_action") {
 			while (count < 5) {
 				var link1 = $("a[href^='http']").eq(count).attr("href");
 				console.log(link1);
 				if (typeof link1 == "undefined") {
 					break;
 				}
-				chrome.runtime.sendMessage({"message": "open_tab", "URL": link1});
+				chrome.runtime.sendMessage({"message": "open_tab", "url": link1});
 				count++;
 			}
 		}
 	}
-)*/
-
-
-function test2() {
-	if (count < 5) {//request.message === "clicked_browser_action") {
-		while (count < 5) {
-			var link1 = $("a[href^='http']").eq(count).attr("href");
-			console.log(link1);
-			if (typeof link1 == "undefined") {
-				break;
-			}
-			chrome.runtime.sendMessage({"message": "open_tab", "URL": link1});
-			count++;
-		}
-	}
-}
-
-document.getElementById('buttonOpen').addEventListener('click', test2);
+)
