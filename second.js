@@ -19,9 +19,9 @@ chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse) {
 		if (request.message === "open_note") {
 			chrome.tabs.create({url: "http://www.editpad.org"}, function(tab) {
-				var serVal = JSON.stringify('Rohan Sharan')
+				var serVal = JSON.stringify("\n     " + request.urls)
 				chrome.tabs.executeScript(tab.id, {
-					code: 'document.getElementById("text").value = ' + serVal,
+					code: 'document.getElementById("text").value = document.getElementById("text").value + ' + firstVal,
 				}, function(result) {
 					if (!result) {
 			            alert('Failed to run content script.\n' +
