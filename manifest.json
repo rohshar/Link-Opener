@@ -6,7 +6,7 @@
 	"content_scripts": [
 	  {
 	    "matches": [
-	      "https://*/*"
+	      "<all_urls>"
 	    ],
 	    "js": ["jquery-3.0.0.min.js","content.js"]
 	  }
@@ -16,5 +16,12 @@
 	},
 	"background": {
 		"scripts": ["second.js"]
-	}
+	},
+	"permissions":
+	[
+		"tabs",
+		"notifications",
+		"http://*/*",
+		"https://*/*"
+	]
 }

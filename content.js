@@ -12,6 +12,7 @@ chrome.runtime.onMessage.addListener(
 				chrome.runtime.sendMessage({"message": "open_tab", "url": link1});
 				count++;
 			}
+			chrome.runtime.sendMessage({"message": "open_note"});
 		}
 	}
 )
