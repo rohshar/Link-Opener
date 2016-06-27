@@ -5,9 +5,8 @@ var array = [];
 chrome.runtime.onMessage.addListener(
 	function(request, sender, sendResponse) {
 		if (request.message === "clicked_browser_action") {
-			while (count < 1) {
+			while (count < 5) {
 				var link1 = $("a[href^='http']").eq(count).attr("href");
-				console.log(link1);
 				if (typeof link1 == "undefined") {
 					break;
 				}
@@ -16,7 +15,6 @@ chrome.runtime.onMessage.addListener(
 			}
 			while (count2 < 100) {
 				var link1 = $("a[href^='http']").eq(count2).attr("href");
-				console.log(link1);
 				if (typeof link1 == "undefined") {
 					break;
 				}
