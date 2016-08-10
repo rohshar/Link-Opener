@@ -1,28 +1,33 @@
-var count = 0;
-var count2 = 0;
-var array = [];
+var openCounter = 0;
+var trackCounter = 0;
+var allUrls = [];
 
+
+/**
+ * Sends two main messages to the background script, one that contains the urls of the first five links
+ * on the current page, and another that sends all of the links as a list (caps the length of list at 100)
+ * @param {string} request - The request that is sent from the content script
+ */
 chrome.runtime.onMessage.addListener(
-	function(request, sender, sendResponse) {
+	function(request) {
 		if (request.message === "clicked_browser_action") {
-			while (count < 5) {
-				var link1 = $("a[href^='http']").eq(count).attr("href");
-				if (typeof link1 == "undefined") {
+			while (openCounter < 5) {
+				var link = $("a[href^='http']").eq(openCounter).attr("href");
+				if (typeof link == "undefined") {
 					break;
 				}
-				chrome.runtime.sendMessage({"message": "open_tab", "url": link1});
-				count++;
+				chrome.runtime.sendMessage({"message": "open_tab", "url": link});
+				openCounter++;
 			}
-			while (count2 < 100) {
-				var link1 = $("a[href^='http']").eq(count2).attr("href");
-				if (typeof link1 == "undefined") {
+			while (trackCounter < 100) {
+				var link = $("a[href^='http']").eq(trackCounter).attr("href");
+				if (typeof link == "undefined") {
 					break;
 				}
-				array.push(link1)
-				count2++;
+				allUrls.push(link)
+				trackCounter++;
 			}
-
-			chrome.runtime.sendMessage({"message": "open_note", "urls": array});
+			chrome.runtime.sendMessage({"message": "open_note", "urls": allUrls});
 		}
 	}
 )

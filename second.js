@@ -1,13 +1,23 @@
+/**
+ * Handles the action that takes place when the extension icon is clicked. Sends a message to the content
+ * script which will initiate the main function of the extension.
+ * @param {string} tab - The current chrome tab.
+ */
 chrome.browserAction.onClicked.addListener(function(tab) {
-
   chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
     var current = tabs[0];
     chrome.tabs.sendMessage(current.id, {"message": "clicked_browser_action"});
   });
 });
 
+
+/**
+ * Creates a new tab and goes to the link that is specified by the content script.
+ * @param {string} request - The request that is sent from the content script.
+ * @param {string} author - The author of the book.
+ */
 chrome.runtime.onMessage.addListener(
-	function(request, sender, sendResponse) {
+	function(request) {
 		if (request.message === "open_tab") {
 			chrome.tabs.create({"url": request.url});
 		}
@@ -15,8 +25,13 @@ chrome.runtime.onMessage.addListener(
 );
 
 
+/**
+ * Creates a new tab and lists out all of the URLs as specified by the content script.
+ * @param {string} request - The request that is sent from the content script.
+ * @param {string} author - The author of the book.
+ */
 chrome.runtime.onMessage.addListener(
-	function(request, sender, sendResponse) {
+	function(request) {
 		if (request.message === "open_note") {
 			chrome.tabs.create({url: "http://www.editpad.org"}, function(tab) {
 				var allUrls = request.urls;
@@ -25,12 +40,12 @@ chrome.runtime.onMessage.addListener(
 						code: 'document.getElementById("text").value = ' + vals,
 				})
 				for (var i = 0; i < allUrls.length; i++) {
-					var serVal = JSON.stringify("\n " + allUrls[i]);
+					var currVal = JSON.stringify("\n " + allUrls[i]);
 					chrome.tabs.executeScript(tab.id, {
-						code: 'document.getElementById("text").value = document.getElementById("text").value + ' + serVal,
+						code: 'document.getElementById("text").value = document.getElementById("text").value + ' + currVal,
 					}, function(result) {
 						if (!result) {
-			            	alert('Failed to run content script.\n' +
+			            	alert('Content script did not work.\n' +
                     			chrome.runtime.lastError.message);
                 			return;
             			}

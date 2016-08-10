@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 	"name": "Link Opening Extension",
-	"description": "This extension will open the first 10 links in a webpage and record the rest",
+	"description": "This extension will open the first 5 links in a webpage and record the rest",
 	"version": "1.0",
 	"content_scripts": [
 	  {
